@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'>
+<link rel ="stylesheet" href = "style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body>
+        <center>
+        <div class = 'bg-gradient'> 
+            <br><h1>Grain size</h1><br>
+        <input class = 'inp' type = 'text' id = 'Grain Size' placeholder = 'Enter grain size in mm'>
+        <br><br>
+        <button class = 'btn' onclick = 'calculate_gs()'> Find</button>
+        <h4 id = 'input'></h4>
+        <h3 id = 'answer'></h3>
+      
+        <!--<h4 id = 'Details'></h4>-->
+        <!-- <h4 id = 'type'></h4>
+        <h4 id = 'common_term'></h4>
+        <h4 id = 'sediment'></h4>
+        <h4 id = 'example'></h4> -->
+    
+        <table>
+            <tr>
+              <th><div  class = 'aa' id = 'Details1'></div></th>
+              <th ><div class = 'aa' id = 'Values1'></div></th>
+            </tr>
+
+            <tr>
+              <td><div class = 'a' id = 'type1'></div></td>    
+              <td><div class = 'b' id = 'type'></div></td>
+            </tr>
+            <tr>
+              <td><div class = 'a' id = 'common_term1'></div></td>
+              <td><div class = 'b' id = 'common_term'></div></td>
+            </tr>
+            <tr>
+                <td><div class = 'a' id = 'sediment1'></div></td>
+                <td><div class = 'b' id = 'sediment'></div></td>
+            </tr>
+            <tr>
+                <td><div class = 'a' id = 'example1'></div></td>
+                <td><div class = 'b' id = 'example'></div></td>
+            </tr>
+        </table>
+        <!-- particle size under table -->
+        <h4 id = 'Kphi'></h4>
+        <h4 id = 'udden'></h4>
+    </center>
+    
+        </div>
+        <script>
+            function calculate_gs(){
+                var gs_input = document.getElementById('Grain Size').value;
+                var kphi = (Math.log2(parseFloat(gs_input)))*(-1);
+                var out = '';
+                //let out2 = '';
+                let type = '';
+                let common_term = '';
+                let sediment = '';
+                let example = '';
+                if  (kphi <= -8.0){
+                    out =  "Boulder";
+                }
+                else if (-8.0< kphi && kphi<= -6.0){
+                    out = "Cobble";
+                }
+                else if (-6.0 < kphi && kphi <= -5.0){
+                    out = "Very coarse gravel or Pebble";    
+                }
+                else if (-5.0 < kphi && kphi <= -4.0){
+                    out = "Coarse gravel or Pebble";
+                }
+                else if (-4.0 < kphi && kphi <= -3.0){
+                    out = "Medium gravel or Pebble";
+                }
+                else if (-3.0 < kphi && kphi <= -2.0){
+                    out = "Fine gravel or Pebble";
+                }
+                else if (-2.0 < kphi && kphi <= -1.0){
+                    out = "Very fine gravel or Granule";
+                }
+                else if (-1.0 < kphi && kphi <= 0.0){
+                    out = "Very coarse sand";
+                }
+                else if (0.0 < kphi && kphi <= 1.0){
+                    out = "Coarse sand";
+                }
+                else if (1.0 < kphi && kphi <= 2.0){
+                    out = "Medium sand";
+                }
+                else if (2.0 < kphi && kphi <= 3.0){
+                    out = "Fine sand";
+                }
+                else if (3.0 < kphi && kphi <= 4.0){
+                    out = "Very fine sand";
+                }
+                else if (4.0 < kphi && kphi <= 5.0){
+                    out = "Coarse silt or mud";
+                }
+                else if (5.0 < kphi && kphi <= 6.0){
+                    out = "Medium silt or mud";
+                }
+                else if (6.0 < kphi && kphi <= 7.0){
+                    out = "Fine silt or mud";
+                }
+                else if (7.0 < kphi && kphi <= 8.0){
+                    out = "Very fine silt or mud";
+                }
+                else if (kphi > 8.0 && kphi <= 10.0){
+                    out = "Mud, Clay";
+                }
+                else if (kphi > 10.0 && kphi <= 20.0){
+                    out = "Mud, Colloid";
+                }
+                else if (parseFloat(gs_input) <= 0){
+                    out = 'Invalid input! Enter a number greter than 0.';
+                }
+                if (kphi == Infinity || kphi == NaN){
+                    type = 'Invalid input';
+                    common_term = 'Invalid input';
+                    sediment = 'Invalid input';
+                    example = 'Invalid input';
+                }    
+                else if (kphi < -1.0){
+                    //out2 = "Details: Rudaceous Rocks, Sediment: Gravel, Rudites rocks. eg: Conglomerates, Breccias";
+                    type = 'Rudaceous rocks';
+                    common_term = 'Rudites';
+                    sediment = 'Gravel';
+                    example = 'Conglomerates and Breccias';
+                }
+                else if (-1.0 <= kphi && kphi <= 4.0){
+                        //out2= "Details: Arenaceous rocks, Sediment: Sand, Sandstones. eg: Arenites and Wackes";
+                        type = 'Arenaceous rocks';
+                        common_term = 'Arenites';
+                        sediment = 'Sand';
+                        example = 'Sandstone, Arenites and Wackes';
+                }
+                else if (kphi > 4.0){
+                        //out2 = "Details: Argillaceous Rocks, Sediment: Mud, Lutites (Mudrocks)";
+                        type = 'Argillaceous rocks';
+                        common_term = 'Lutites (Mudrocks)';
+                        sediment = 'Mud/Clay';
+                        example = 'Shale, Claystone';
+                }
+            
+                
+                document.getElementById('input').innerHTML ="Input value = " + gs_input + ' mm';
+                document.getElementById('answer').innerHTML ="Udden-Wentworth nomenclature: " + out;
+                document.getElementById('udden').innerHTML ="Udden grade scale value = " + "2^"+(-1*kphi);
+                //document.getElementById('Details').innerHTML =  out2;
+                document.getElementById('Kphi').innerHTML = "Krumbein's scale value (Particle size) &#981; = " + kphi;
+                // document.getElementById('type').innerHTML = "(1.) Type: " + type;
+                // document.getElementById('common_term').innerHTML = "(2.) commonly termed as: "+common_term;
+                // document.getElementById('sediment').innerHTML = "(3.) Sediment: "+ sediment;
+                // document.getElementById('example').innerHTML = "(4.) Examples: " + example;
+                // for table
+                document.getElementById('Details1').innerHTML = 'Details'
+                document.getElementById('Values1').innerHTML = 'Values'
+                document.getElementById('type1').innerHTML = 'Type';
+                document.getElementById('common_term1').innerHTML = 'Commonly termed ';
+                document.getElementById('sediment1').innerHTML = 'Sediment';
+                document.getElementById('example1').innerHTML = 'Example';
+                //
+                document.getElementById('type').innerHTML = type;
+                document.getElementById('common_term').innerHTML = common_term;
+                document.getElementById('sediment').innerHTML = sediment;
+                document.getElementById('example').innerHTML = example;
+            }
+        </script>
+             
+    <!-- </center> -->
+    <footer>
+        <center>
+        <div class = 'footer_details'>
+            <ul class = 'socials'>
+                <a href = 'https://www.linkedin.com/in/sarthaksingh7/'> <i class = 'fa fa-linkedin-square'></i></a>
+            </ul>
+            <div class = 'footer_bottom'>
+                <p> designed by <span> Sarthak Singh</span></p>
+        </div>
+        </div>
+    </center>
+    </footer>
+    </body>
+</html>
